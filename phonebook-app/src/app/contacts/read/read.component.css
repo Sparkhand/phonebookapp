@@ -1,3 +1,23 @@
 .table {
     border: 1px solid black;
 }
+
+.table tr td {
+    font-size: 20px;
+}
+
+.icon {
+    font-size: 25px;
+}
+
+.details {
+    color: #1b7ced;
+}
+
+.edit {
+    color: #B148D2;
+}
+
+.delete {
+    color: #E9150B;
+}

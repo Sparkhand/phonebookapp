@@ -11,11 +11,11 @@ import { HomeComponent } from './home/home.component';
 import { CreateComponent } from './create/create.component';
 import { ReadComponent } from './read/read.component';
 import { UpdateComponent } from './update/update.component';
-import { DeleteComponent } from './delete/delete.component';
+import { ReadDetailsComponent } from './read-details/read-details.component';
 
 
 @NgModule({
-  declarations: [ContactsComponent, ReadComponent, HomeComponent, CreateComponent, UpdateComponent, DeleteComponent],
+  declarations: [ContactsComponent, ReadComponent, HomeComponent, CreateComponent, UpdateComponent, ReadDetailsComponent],
   imports: [
     CommonModule,
     ContactsRoutingModule,

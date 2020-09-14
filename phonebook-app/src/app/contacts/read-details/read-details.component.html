@@ -1,0 +1,14 @@
+<div class="container d-flex">
+    <div class="card border-dark mx-auto mt-5">
+        <div class="card-body">
+            <h1 class="card-title">{{contact.name}}</h1>
+            <h6 class="card-subtitle mt-2 text-muted">{{contact.tags}}</h6>
+            <p class="card-text mt-4 ">{{contact.number}}</p>
+            <a href="mailto:{{contact.email}}" class="card-link">{{contact.email}}</a>
+            <br>
+            <a [routerLink]="['/update', contact.id]" class="btn btn-primary mt-4">Edit</a>
+            <a (click)="onDeleteClick(contact.name)" class="btn btn-danger mt-4 ml-4">Delete</a>
+        </div>
+    </div>
+</div>
+

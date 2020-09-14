@@ -1,0 +1,8 @@
+.card {
+    width: 400px; 
+    max-width: 500px;
+}
+
+.card p { font-size: 25px; }
+
+.card a { font-size: 25px; }
