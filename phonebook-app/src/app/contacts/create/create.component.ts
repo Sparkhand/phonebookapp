@@ -1,4 +1,7 @@
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
+import { Contact } from '../contact';
+import { CrudService } from '../crud.service';
 
 @Component({
   selector: 'app-create',
@@ -7,9 +10,34 @@ import { Component, OnInit } from '@angular/core';
 })
 export class CreateComponent implements OnInit {
 
-  constructor() { }
+  contact: Contact;
+
+  constructor(
+    public crudService: CrudService,
+    private router: Router
+  ) { }
 
   ngOnInit(): void {
+  }
+
+  model: Contact = {
+    id: '',
+    name: '',
+    email: '',
+    number: '',
+    tags: []
+  };
+
+  receiveContact($event){
+    this.contact = $event;
+    this.confirmCreate();
+  } 
+
+  confirmCreate() {
+    this.crudService.create(this.contact).subscribe(res => {
+      alert('Succesfully created contact ' + res.name);
+      this.router.navigate(['/read']);
+    });
   }
 
 }

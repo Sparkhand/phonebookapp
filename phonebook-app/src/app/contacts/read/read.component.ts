@@ -1,5 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Contact } from '../contact'; 
+import { Router } from '@angular/router';
+import { Location } from '@angular/common';
 import { CrudService } from '../crud.service';
 
 @Component({
@@ -12,7 +14,9 @@ export class ReadComponent implements OnInit {
   contacts: Contact[] = [];
 
   constructor(
-    public crudService: CrudService
+    public crudService: CrudService,
+    private router: Router,
+    private location: Location
   ) { }
 
   ngOnInit(): void {
@@ -26,7 +30,9 @@ export class ReadComponent implements OnInit {
     if(confirm("Are you sure you want to delete " + name + "?")) {
       this.crudService.delete(id).subscribe(() => {
         alert(name + " was deleted from your contacts");
-        window.location.reload();
+        this.router.navigateByUrl("/",{skipLocationChange:true}).then(() => {
+          this.router.navigate([decodeURI(this.location.path())]);
+        });
       });
     }
   }

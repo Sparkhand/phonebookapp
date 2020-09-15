@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { Router, ActivatedRoute } from '@angular/router';
 import { Contact } from '../contact';
 import { CrudService } from '../crud.service';
 
@@ -11,19 +11,31 @@ import { CrudService } from '../crud.service';
 export class UpdateComponent implements OnInit {
 
   qs_id: string;
-  contact: Contact;
+  contact_to_edit: Contact;
 
   constructor(
     public crudService: CrudService,
+    private router: Router,
     private route: ActivatedRoute
   ) { }
 
   ngOnInit(): void {
     this.qs_id = this.route.snapshot.paramMap.get('id');
     this.crudService.getById(this.qs_id).subscribe((data: Contact)=>{
-      console.log(data[0]);
-      this.contact = data[0];
+      this.contact_to_edit = data[0];
     })  
+  }
+
+  receiveContact($event){
+    this.contact_to_edit = $event;
+    this.confirmUpdate();
+  } 
+
+  confirmUpdate() {
+    this.crudService.update(this.contact_to_edit).subscribe(res => {
+      alert('Succesfully edited contact');
+      this.router.navigate(['/read'])
+    });
   }
 
 }

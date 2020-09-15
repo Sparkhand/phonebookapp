@@ -1,0 +1,17 @@
+<form #f="ngForm" (ngSubmit)="onSubmit(f)" ngNativeValidate>
+    <div class="form-group">
+      <label for="name">Name</label>
+      <input type="text" class="form-control" name="name" [ngModel]="init_contact.name" ngModel required>
+      <small class="form-text text-muted">Required</small>
+    </div>
+    <div class="form-group">
+      <label for="number">Number</label>
+      <input type="tel" class="form-control" id="number" name="number" [ngModel]="init_contact.number" ngModel required>
+      <small class="form-text text-muted">Required</small>
+    </div>
+    <div class="form-group">
+        <label for="email">E-Mail</label>
+        <input type="text" class="form-control" id="email" name="email" [ngModel]="init_contact.email" ngModel>
+    </div>
+    <button class="btn btn-primary">Confirm</button>
+</form>
