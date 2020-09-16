@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
 import { Contact } from '../contact';
-import { CrudService } from '../crud.service';
+import { CrudService } from '../../crud.service';
 
 @Component({
   selector: 'app-read-details',

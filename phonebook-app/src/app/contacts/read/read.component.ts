@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Contact } from '../contact'; 
 import { Router } from '@angular/router';
 import { Location } from '@angular/common';
-import { CrudService } from '../crud.service';
+import { CrudService } from '../../crud.service';
 
 @Component({
   selector: 'app-read',

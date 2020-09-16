@@ -1,12 +1,12 @@
 import { Injectable } from '@angular/core';
-import { HttpClient, HttpErrorResponse, HttpHeaders } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable, throwError } from 'rxjs';
 import { catchError } from 'rxjs/operators';
 
-import { Contact } from './contact';
+import { Contact } from './contacts/contact';
 
 @Injectable({
-  providedIn: 'any'
+  providedIn: 'root'
 })
 export class CrudService {
 
@@ -61,10 +61,8 @@ export class CrudService {
   errorHandler(error) {
     let errorMessage = '';
     if(error.error instanceof ErrorEvent) {
-      // Get client-side error
       errorMessage = error.error.message;
     } else {
-      // Get server-side error
       errorMessage = `Error Code: ${error.status}\nMessage: ${error.message}`;
     }
     console.log(errorMessage);
