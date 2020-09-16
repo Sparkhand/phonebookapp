@@ -20,13 +20,7 @@ export class CreateComponent implements OnInit {
   ngOnInit(): void {
   }
 
-  model: Contact = {
-    id: '',
-    name: '',
-    email: '',
-    number: '',
-    tags: []
-  };
+  model: Contact;
 
   receiveContact($event){
     this.contact = $event;

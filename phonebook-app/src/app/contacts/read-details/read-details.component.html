@@ -1,5 +1,5 @@
 <div class="container d-flex">
-    <div class="card border-dark mx-auto mt-5">
+    <div *ngIf="contact" class="card border-dark mx-auto mt-5">
         <div class="card-body">
             <h1 class="card-title">{{contact.name}}</h1>
             <h6 class="card-subtitle mt-2 text-muted">{{contact.tags}}</h6>

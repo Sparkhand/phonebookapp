@@ -1,28 +1,40 @@
 <div class="container-fluid mt-5">
-  <table class="table">
-    <thead class="thead-dark text-center">
-      <tr>
-        <th scope="col">Name</th>
-        <th scope="col">Number</th>
-        <th scope="col"></th>
-        <th scope="col"></th>
-        <th scope="col"></th>
-      </tr>
-    </thead>
-    <tbody class="text-center">
-      <tr *ngFor="let contact of contacts">
-        <td scope="col">{{contact.name}}</td>
-        <td scope="col">{{contact.number}}</td>
-        <td scope="col">
-          <a [routerLink]="['/read', contact.id]"><i class="icon details fa fa-info-circle" aria-hidden="true"></i></a>
-        </td>
-        <td scope="col">
-          <a [routerLink]="['/update', contact.id]"><i class="icon edit fa fa-pencil" aria-hidden="true"></i></a>
-        </td>
-        <td scope="col">
-          <a (click)="onDeleteClick(contact.id, contact.name)"><i class="icon delete fa fa-trash" aria-hidden="true"></i></a>
-        </td>
-      </tr>
-    </tbody>
-  </table>
+  <div *ngIf="contacts.length !== 0; else showEmptyErr">
+    <table class="table">
+      <thead class="thead-dark text-center">
+        <tr>
+          <th scope="col">Name</th>
+          <th scope="col">Number</th>
+          <th scope="col"></th>
+          <th scope="col"></th>
+          <th scope="col"></th>
+        </tr>
+      </thead>
+      <tbody class="text-center">
+        <tr *ngFor="let contact of contacts">
+          <td scope="col">{{contact.name}}</td>
+          <td scope="col">{{contact.number}}</td>
+          <td scope="col">
+            <a [routerLink]="['/read', contact.id]"><i class="icon details fa fa-info-circle" aria-hidden="true"></i></a>
+          </td>
+          <td scope="col">
+            <a [routerLink]="['/update', contact.id]"><i class="icon edit fa fa-pencil" aria-hidden="true"></i></a>
+          </td>
+          <td scope="col">
+            <a (click)="onDeleteClick(contact.id, contact.name)"><i class="icon delete fa fa-trash" aria-hidden="true"></i></a>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+  <ng-template #showEmptyErr>
+    <div class="text-center">
+      <h1>Your contact list is empty!</h1>
+      <p>To add someone, click the button below</p>
+      <button routerLink="/create"> 
+        <i class="fa fa-plus" aria-hidden="true"></i>
+        <p>Add contact</p>
+      </button>
+    </div>
+  </ng-template>
 </div>

@@ -10,7 +10,13 @@ import {NgForm} from '@angular/forms';
 
 export class ContactFormComponent {
 
-  @Input() init_contact: Contact;
+  @Input() init_contact: Contact = {
+    id: '',
+    name: '',
+    number: '',
+    email: '',
+    tags: []
+  };
   @Output() submitEvent = new EventEmitter<Contact>();
 
   onSubmit(f: NgForm) {
