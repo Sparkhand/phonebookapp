@@ -31,11 +31,11 @@ export class ContactFormComponent implements OnChanges {
 
   onSubmit(): void {
     const c: Contact = {
-      id: this.initContact.id,
+      id: this.initContact ? this.initContact.id : '',
       name: this.contactForm.get('name').value,
       number: this.contactForm.get('number').value,
       email: this.contactForm.get('email').value,
-      tags: this.initContact.tags
+      tags: this.initContact ? this.initContact.tags : []
     };
     this.submitEvent.emit(c);
   }

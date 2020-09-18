@@ -26,18 +26,10 @@ export class CreateComponent implements OnInit {
       .subscribe();
   }
 
-  model: Contact;
-
-  receiveContact($event){
-    this.contact = $event;
-    this.confirmCreate();
-  } 
-
-  confirmCreate() {
-    this.crudService.create(this.contact).subscribe(res => {
-      alert('Succesfully created contact ' + res.name);
-      this.router.navigate(['/read']);
-    });
+  receiveContactAndCreate(contact: Contact): void {
+    this.crudService.create(contact).subscribe();
+    alert('Succesfully created contact ' + contact.name);
+    this.router.navigate(['/read']);
   }
 
 }
