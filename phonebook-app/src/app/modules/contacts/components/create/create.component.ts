@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import { Contact } from '../contact';
-import { CrudService } from '../../crud.service';
+import { Contact } from '../../ts/models/contact';
+import { CrudService } from '../../services/crud.service';
 
 @Component({
   selector: 'app-create',

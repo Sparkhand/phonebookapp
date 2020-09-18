@@ -1,5 +1,5 @@
-import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
-import { Contact } from '../contact';
+import { Component, Input, Output, EventEmitter } from '@angular/core';
+import { Contact } from '../../ts/models/contact';
 import {NgForm} from '@angular/forms';
 
 @Component({

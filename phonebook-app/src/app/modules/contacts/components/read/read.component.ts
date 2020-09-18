@@ -1,8 +1,8 @@
 import { Component, OnInit } from '@angular/core';
-import { Contact } from '../contact'; 
 import { Router } from '@angular/router';
 import { Location } from '@angular/common';
-import { CrudService } from '../../crud.service';
+import { Contact } from '../../ts/models/contact';
+import { CrudService } from '../../services/crud.service';
 
 @Component({
   selector: 'app-read',
