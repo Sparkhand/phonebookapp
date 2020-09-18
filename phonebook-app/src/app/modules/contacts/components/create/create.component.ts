@@ -2,7 +2,10 @@ import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { Contact } from '../../ts/models/contact';
 import { CrudService } from '../../services/crud.service';
+import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
+import { interval } from 'rxjs';
 
+@UntilDestroy()
 @Component({
   selector: 'app-create',
   templateUrl: './create.component.html',
@@ -18,6 +21,9 @@ export class CreateComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
+    interval(1000)
+      .pipe(untilDestroyed(this))
+      .subscribe();
   }
 
   model: Contact;

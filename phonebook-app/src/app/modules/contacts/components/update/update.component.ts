@@ -1,8 +1,12 @@
 import { Component, OnInit } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
 import { Contact } from '../../ts/models/contact';
+import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
 import { CrudService } from '../../services/crud.service';
+import { interval, Observable } from 'rxjs';
+import { tap } from 'rxjs/operators';
 
+@UntilDestroy()
 @Component({
   selector: 'app-update',
   templateUrl: './update.component.html',
@@ -10,8 +14,9 @@ import { CrudService } from '../../services/crud.service';
 })
 export class UpdateComponent implements OnInit {
 
-  qs_id: string;
-  contact_to_edit: Contact;
+  qsId: string;
+  contactToEdit$: Observable<Contact>;
+  contact: Contact;
 
   constructor(
     public crudService: CrudService,
@@ -20,22 +25,20 @@ export class UpdateComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
-    this.qs_id = this.route.snapshot.paramMap.get('id');
-    this.crudService.getById(this.qs_id).subscribe((data: Contact)=>{
-      this.contact_to_edit = data[0];
-    })  
+    this.qsId = this.route.snapshot.paramMap.get('id');
+    this.contactToEdit$ = this.crudService.getById(this.qsId)
+    .pipe(
+      tap(contact => this.contact = contact)
+    );
+    interval(1000)
+      .pipe(untilDestroyed(this))
+      .subscribe();
   }
 
-  receiveContact($event){
-    this.contact_to_edit = $event;
-    this.confirmUpdate();
-  } 
-
-  confirmUpdate() {
-    this.crudService.update(this.contact_to_edit).subscribe(res => {
-      alert('Succesfully edited contact');
-      this.router.navigate(['/read'])
-    });
+  receiveContactAndUpdate(contact: Contact): void {
+    this.crudService.update(contact).subscribe();
+    alert('Succesfully edited contact');
+    this.router.navigate(['/read']);
   }
 
 }

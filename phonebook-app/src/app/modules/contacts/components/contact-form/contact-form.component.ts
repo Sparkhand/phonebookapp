@@ -1,6 +1,6 @@
-import { Component, Input, Output, EventEmitter } from '@angular/core';
+import { Component, Input, Output, EventEmitter, OnChanges, SimpleChanges } from '@angular/core';
 import { Contact } from '../../ts/models/contact';
-import {NgForm} from '@angular/forms';
+import { FormGroup, FormControl } from '@angular/forms';
 
 @Component({
   selector: 'app-contact-form',
@@ -8,22 +8,36 @@ import {NgForm} from '@angular/forms';
   styleUrls: ['./contact-form.component.css']
 })
 
-export class ContactFormComponent {
+export class ContactFormComponent implements OnChanges {
 
-  @Input() init_contact: Contact = {
-    id: '',
-    name: '',
-    number: '',
-    email: '',
-    tags: []
-  };
+  @Input() initContact: Contact;
   @Output() submitEvent = new EventEmitter<Contact>();
 
-  onSubmit(f: NgForm) {
-    this.init_contact.name = f.value.name;
-    this.init_contact.number = f.value.number;
-    this.init_contact.email = f.value.email;
-    this.submitEvent.emit(this.init_contact);
+  contactForm = new FormGroup({
+    name: new FormControl(''),
+    number: new FormControl(''),
+    email: new FormControl('')
+  });
+
+  ngOnChanges(changes: SimpleChanges): void {
+    if(changes.initContact.currentValue){
+      this.contactForm.patchValue({
+        name: changes.initContact.currentValue.name,
+        number: changes.initContact.currentValue.number,
+        email: changes.initContact.currentValue.email
+      });
+    }
+  }
+
+  onSubmit(): void {
+    const c: Contact = {
+      id: this.initContact.id,
+      name: this.contactForm.get('name').value,
+      number: this.contactForm.get('number').value,
+      email: this.contactForm.get('email').value,
+      tags: this.initContact.tags
+    };
+    this.submitEvent.emit(c);
   }
 
 }

@@ -1,8 +1,11 @@
 import { Component, OnInit } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
 import { Contact } from '../../ts/models/contact';
+import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
 import { CrudService } from '../../services/crud.service';
+import { interval } from 'rxjs';
 
+@UntilDestroy()
 @Component({
   selector: 'app-read-details',
   templateUrl: './read-details.component.html',
@@ -10,7 +13,7 @@ import { CrudService } from '../../services/crud.service';
 })
 export class ReadDetailsComponent implements OnInit {
 
-  qs_id: string;
+  qsId: string;
   contact: Contact;
 
   constructor(
@@ -20,18 +23,20 @@ export class ReadDetailsComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
-    this.qs_id = this.route.snapshot.paramMap.get('id');
-    this.crudService.getById(this.qs_id).subscribe((data: Contact)=>{
-      console.log(data[0]);
-      this.contact = data[0];
-    })  
+    this.qsId = this.route.snapshot.paramMap.get('id');
+    this.crudService.getById(this.qsId).subscribe((data: Contact) => {
+      this.contact = data;
+    });
+    interval(1000)
+      .pipe(untilDestroyed(this))
+      .subscribe();
   }
 
-  onDeleteClick(name: string) {
-    if(confirm("Are you sure you want to delete " + name + "?")) {
-      this.crudService.delete(this.qs_id).subscribe(() => {
-        alert(name + " was deleted from your contacts");
-        this.router.navigate(['/read'])
+  onDeleteClick(name: string): void {
+    if (confirm('Are you sure you want to delete ' + name + '?')) {
+      this.crudService.delete(this.qsId).subscribe(() => {
+        alert(name + ' was deleted from your contacts');
+        this.router.navigate(['/read']);
       });
     }
   }

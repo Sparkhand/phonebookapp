@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { Observable, throwError } from 'rxjs';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { catchError } from 'rxjs/operators';
+import { catchError, map } from 'rxjs/operators';
 import { environment as env } from 'src/environments/environment';
 import { Contact } from '../ts/models/contact';
 
@@ -35,8 +35,9 @@ export class CrudService {
   }
 
   getById(id: string): Observable<Contact> {
-    return this.httpClient.get<Contact>(env.contactApiServer + '/get/' + id)
+    return this.httpClient.get<Contact[]>(env.contactApiServer + '/get/' + id)
     .pipe(
+      map((retrievedContact: Contact[]) => retrievedContact[0]),
       catchError(this.errorHandler)
     );
   }
@@ -45,6 +46,7 @@ export class CrudService {
   update(contact: Contact): Observable<Contact> {
     return this.httpClient.put<Contact>(env.contactApiServer + '/put/', contact, this.httpOptions)
     .pipe(
+      map((updatedContact: Contact) => updatedContact),
       catchError(this.errorHandler)
     );
   }

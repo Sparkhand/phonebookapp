@@ -1,5 +1,8 @@
 <div class="container mt-5">
     <h1>Edit contact</h1>
     <br>
-    <app-contact-form [init_contact]="contact_to_edit" (submitEvent)="receiveContact($event)"></app-contact-form>
+    <app-contact-form 
+        [initContact]="contactToEdit$ | async" 
+        (submitEvent)="receiveContactAndUpdate($event)"
+    ></app-contact-form>
 </div>
