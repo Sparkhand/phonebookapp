@@ -4,20 +4,17 @@ import { CommonModule } from '@angular/common';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 import { ContactsRoutingModule } from './contacts-routing.module';
-import { ContactsComponent } from './contacts.component';
-
-import { HomeComponent } from './components/home/home.component';
-import { CreateComponent } from './components/create/create.component';
-import { ReadComponent } from './components/read/read.component';
-import { UpdateComponent } from './components/update/update.component';
-import { ReadDetailsComponent } from './components/read-details/read-details.component';
-import { ContactFormComponent } from './components/contact-form/contact-form.component';
+import { ContactsComponent } from '../contacts.component';
+import { CreateComponent } from '../components/create/create.component';
+import { ReadComponent } from '../components/read/read.component';
+import { UpdateComponent } from '../components/update/update.component';
+import { ReadDetailsComponent } from '../components/read-details/read-details.component';
+import { ContactFormComponent } from '../components/contact-form/contact-form.component';
 
 @NgModule({
   declarations: [
     ContactsComponent,
     ReadComponent,
-    HomeComponent,
     CreateComponent,
     UpdateComponent,
     ReadDetailsComponent,

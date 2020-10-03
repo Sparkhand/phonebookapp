@@ -1,10 +1,8 @@
 import { Component, OnInit } from '@angular/core';
-import { Router } from '@angular/router';
-import { Location } from '@angular/common';
 import { Contact } from '../../ts/models/contact';
 import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
-import { CrudService } from '../../services/crud.service';
 import { interval } from 'rxjs';
+import { CrudService } from 'src/app/core/services/crud.service';
 
 @UntilDestroy()
 @Component({
@@ -18,27 +16,25 @@ export class ReadComponent implements OnInit {
 
   constructor(
     public crudService: CrudService,
-    private router: Router,
-    private location: Location
   ) { }
 
   ngOnInit(): void {
-    this.crudService.getAll().subscribe((data: Contact[])=>{
-      console.log(data);
-      this.contacts = data;
-    });
-    interval(1000)
+    this.crudService.fetchData$()
       .pipe(untilDestroyed(this))
-      .subscribe();
+      .subscribe((data: Contact[]) => {
+        console.log(data);
+        this.contacts = data;
+      });
   }
 
   onDeleteClick(id: string, name: string): void {
     if(confirm('Are you sure you want to delete ' + name + '?')) {
-      this.crudService.delete(id).subscribe(() => {
+      this.crudService.delete(id).pipe(untilDestroyed(this))
+      .subscribe(_ => {
         alert(name + ' was deleted from your contacts');
-        this.router.navigateByUrl('/',{skipLocationChange: true}).then(() => {
-          this.router.navigate([decodeURI(this.location.path())]);
-        });
+        this.contacts = this.contacts.filter(contact => contact.id !== id);
+      }, _ => {
+        alert('Error while deleting ' + name);
       });
     }
   }

@@ -2,8 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
 import { Contact } from '../../ts/models/contact';
 import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
-import { CrudService } from '../../services/crud.service';
 import { interval } from 'rxjs';
+import { CrudService } from 'src/app/core/services/crud.service';
 
 @UntilDestroy()
 @Component({
@@ -34,9 +34,13 @@ export class ReadDetailsComponent implements OnInit {
 
   onDeleteClick(name: string): void {
     if (confirm('Are you sure you want to delete ' + name + '?')) {
-      this.crudService.delete(this.qsId).subscribe(() => {
+      this.crudService.delete(this.qsId)
+      .pipe(untilDestroyed(this))
+      .subscribe(_ => {
         alert(name + ' was deleted from your contacts');
         this.router.navigate(['/read']);
+      }, _ => {
+        alert('Error while deleting ' + name);
       });
     }
   }

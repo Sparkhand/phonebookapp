@@ -1,9 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { Contact } from '../../ts/models/contact';
-import { CrudService } from '../../services/crud.service';
 import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
 import { interval } from 'rxjs';
+import { CrudService } from 'src/app/core/services/crud.service';
 
 @UntilDestroy()
 @Component({
@@ -27,9 +27,14 @@ export class CreateComponent implements OnInit {
   }
 
   receiveContactAndCreate(contact: Contact): void {
-    this.crudService.create(contact).subscribe();
-    alert('Succesfully created contact ' + contact.name);
-    this.router.navigate(['/read']);
+    this.crudService.create(contact)
+    .pipe(untilDestroyed(this))
+    .subscribe(_ => {
+      alert('Succesfully created contact ' + contact.name);
+      this.router.navigate(['/read']);
+    }, _ => {
+      alert('Error while creating ' + contact.name);
+    });
   }
 
 }

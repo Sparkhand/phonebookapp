@@ -1,9 +1,9 @@
 import { Injectable } from '@angular/core';
-import { Observable, throwError } from 'rxjs';
-import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { catchError, map } from 'rxjs/operators';
+import { interval, Observable, throwError } from 'rxjs';
+import { HttpClient, HttpErrorResponse, HttpHeaders } from '@angular/common/http';
+import { catchError, map, switchMap } from 'rxjs/operators';
 import { environment as env } from 'src/environments/environment';
-import { Contact } from '../ts/models/contact';
+import { Contact } from 'src/app/contacts/ts/models/contact';
 
 @Injectable({
   providedIn: 'root'
@@ -27,6 +27,13 @@ export class CrudService {
   }
 
   // READ
+  fetchData$(): Observable<Contact[]> {
+    return interval(1000)
+    .pipe(
+      switchMap(_ => this.getAll())
+    );
+  }
+
   getAll(): Observable<Contact[]> {
     return this.httpClient.get<Contact[]>(env.contactApiServer + '/get/')
     .pipe(
@@ -60,9 +67,9 @@ export class CrudService {
   }
 
   // Error handling function
-  errorHandler(error) {
+  errorHandler(error: HttpErrorResponse): Observable<never> {
     let errorMessage = '';
-    if(error.error instanceof ErrorEvent) {
+    if (error.error instanceof ErrorEvent) {
       errorMessage = error.error.message;
     } else {
       errorMessage = `Error Code: ${error.status}\nMessage: ${error.message}`;

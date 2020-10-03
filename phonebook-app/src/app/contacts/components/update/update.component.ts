@@ -2,9 +2,9 @@ import { Component, OnInit } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
 import { Contact } from '../../ts/models/contact';
 import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
-import { CrudService } from '../../services/crud.service';
 import { interval, Observable } from 'rxjs';
 import { tap } from 'rxjs/operators';
+import { CrudService } from 'src/app/core/services/crud.service';
 
 @UntilDestroy()
 @Component({
@@ -36,9 +36,14 @@ export class UpdateComponent implements OnInit {
   }
 
   receiveContactAndUpdate(contact: Contact): void {
-    this.crudService.update(contact).subscribe();
-    alert('Succesfully edited contact');
-    this.router.navigate(['/read']);
+    this.crudService.update(contact)
+    .pipe(untilDestroyed(this))
+    .subscribe(_ => {
+      alert('Succesfully edited contact');
+      this.router.navigate(['/read']);
+    }, _ => {
+      alert('Error while editing contact');
+    });
   }
 
 }

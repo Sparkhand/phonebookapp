@@ -1,11 +1,11 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 
-import { HomeComponent } from './components/home/home.component';
-import { CreateComponent } from './components/create/create.component';
-import { ReadComponent } from './components/read/read.component';
-import { UpdateComponent } from './components/update/update.component';
-import { ReadDetailsComponent } from './components/read-details/read-details.component';
+import { HomeComponent } from '../../core/components/home/home.component';
+import { CreateComponent } from '../components/create/create.component';
+import { ReadComponent } from '../components/read/read.component';
+import { UpdateComponent } from '../components/update/update.component';
+import { ReadDetailsComponent } from '../components/read-details/read-details.component';
 
 const routes: Routes = [
   { path: '', component: HomeComponent },
