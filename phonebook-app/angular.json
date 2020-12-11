@@ -124,6 +124,10 @@
           }
         }
       }
-    }},
-  "defaultProject": "phonebook-app"
+    }
+  },
+  "defaultProject": "phonebook-app",
+  "cli": {
+    "defaultCollection": "@ngrx/schematics"
+  }
 }

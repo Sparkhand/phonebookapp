@@ -10,6 +10,10 @@ import { ReadComponent } from '../components/read/read.component';
 import { UpdateComponent } from '../components/update/update.component';
 import { ReadDetailsComponent } from '../components/read-details/read-details.component';
 import { ContactFormComponent } from '../components/contact-form/contact-form.component';
+import { EffectsModule } from '@ngrx/effects';
+import { ContactsEffects } from '../ngrx/contacts.effects';
+import { StoreModule } from '@ngrx/store';
+import * as fromContacts from '../ngrx/contacts.reducer';
 
 @NgModule({
   declarations: [
@@ -25,7 +29,9 @@ import { ContactFormComponent } from '../components/contact-form/contact-form.co
     HttpClientModule,
     FormsModule,
     ReactiveFormsModule,
-    CommonModule
+    CommonModule,
+    EffectsModule.forFeature([ContactsEffects]),
+    StoreModule.forFeature(fromContacts.contactsFeatureKey, fromContacts.ContactsReducer)
   ],
 })
 

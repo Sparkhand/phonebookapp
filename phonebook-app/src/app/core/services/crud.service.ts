@@ -21,49 +21,46 @@ export class CrudService {
   // CREATE
   create(contact: Contact): Observable<Contact> {
     return this.httpClient.post<Contact>(env.contactApiServer + '/post/', contact, this.httpOptions)
-    .pipe(
-      catchError(this.errorHandler)
-    );
+      .pipe(
+        catchError(this.errorHandler)
+      );
   }
 
   // READ
   fetchData$(): Observable<Contact[]> {
     return interval(1000)
-    .pipe(
-      switchMap(_ => this.getAll())
-    );
+      .pipe(
+        switchMap(_ => this.getAll())
+      );
   }
 
   getAll(): Observable<Contact[]> {
-    return this.httpClient.get<Contact[]>(env.contactApiServer + '/get/')
-    .pipe(
-      catchError(this.errorHandler)
-    );
+    return this.httpClient.get<Contact[]>(env.contactApiServer + '/get/');
   }
 
   getById(id: string): Observable<Contact> {
     return this.httpClient.get<Contact[]>(env.contactApiServer + '/get/' + id)
-    .pipe(
-      map((retrievedContact: Contact[]) => retrievedContact[0]),
-      catchError(this.errorHandler)
-    );
+      .pipe(
+        map((retrievedContact: Contact[]) => retrievedContact[0]),
+        catchError(this.errorHandler)
+      );
   }
 
   // UPDATE
   update(contact: Contact): Observable<Contact> {
     return this.httpClient.put<Contact>(env.contactApiServer + '/put/', contact, this.httpOptions)
-    .pipe(
-      map((updatedContact: Contact) => updatedContact),
-      catchError(this.errorHandler)
-    );
+      .pipe(
+        map((updatedContact: Contact) => updatedContact),
+        catchError(this.errorHandler)
+      );
   }
 
   // DELETE
-  delete(id: string): Observable<Contact>{
+  delete(id: string): Observable<Contact> {
     return this.httpClient.delete<Contact>(env.contactApiServer + '/delete/' + id, this.httpOptions)
-    .pipe(
-      catchError(this.errorHandler)
-    );
+      .pipe(
+        catchError(this.errorHandler)
+      );
   }
 
   // Error handling function
@@ -76,6 +73,6 @@ export class CrudService {
     }
     console.log(errorMessage);
     return throwError(errorMessage);
- }
+  }
 
 }
