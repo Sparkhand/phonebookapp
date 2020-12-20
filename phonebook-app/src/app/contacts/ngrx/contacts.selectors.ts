@@ -16,5 +16,5 @@ export const areContactsLoading = () => createSelector(
 
 export const didLoadingFail = () => createSelector(
   selectContactsState,
-  contactsState => contactsState.loadingError
-);
+  selectContactsState => selectContactsState.errorMessage
+)

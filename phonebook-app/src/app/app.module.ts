@@ -11,8 +11,8 @@ import { StoreDevtoolsModule } from '@ngrx/store-devtools';
 import { environment } from '../environments/environment';
 import { EffectsModule } from '@ngrx/effects';
 import { ContactsEffects } from './contacts/ngrx/contacts.effects';
-import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { ToastrModule } from 'ngx-toastr';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 @NgModule({
   declarations: [
@@ -24,8 +24,8 @@ import { ToastrModule } from 'ngx-toastr';
     AppRoutingModule,
     HttpClientModule,
     CoreModule,
-    BrowserAnimationsModule,
     ToastrModule.forRoot(),
+    BrowserAnimationsModule,
     StoreModule.forRoot(reducers, { metaReducers }),
     EffectsModule.forRoot([
       ContactsEffects

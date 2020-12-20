@@ -30,8 +30,7 @@ export class CrudService {
   fetchData$(): Observable<Contact[]> {
     return interval(1000)
       .pipe(
-        switchMap(_ => this.getAll()),
-        catchError(this.errorHandler)
+        switchMap(_ => this.getAll())
       );
   }
 

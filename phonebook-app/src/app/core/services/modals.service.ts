@@ -4,15 +4,14 @@ import { ToastrService } from 'ngx-toastr';
 @Injectable({
   providedIn: 'root'
 })
-export class ToastrNotificationService {
+export class ModalsService {
 
   constructor(private toastr: ToastrService) { }
 
-  showError(title: string, msg: string){
-    this.toastr.error(msg, title, {
-      timeOut: 1800,
+  showError(title: string, message: string){
+    this.toastr.error(message, title, {
+      timeOut: 2500,
       progressBar: true
     });
   }
-
 }
