@@ -13,3 +13,8 @@ export const areContactsLoading = () => createSelector(
   selectContactsState,
   contactsState => contactsState.isLoading
 );
+
+export const didLoadingFail = () => createSelector(
+  selectContactsState,
+  contactsState => contactsState.loadingError
+);

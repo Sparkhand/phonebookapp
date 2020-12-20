@@ -1,5 +1,5 @@
 <div class="container-fluid mt-5">
-  <div *ngIf="!(isLoading$ | async); else showEmptyErr">
+  <div *ngIf="!(isLoading$ | async) && (contacts.length > 0); else showEmptyErr">
     <table class="table">
       <thead class="thead-dark text-center">
         <tr>

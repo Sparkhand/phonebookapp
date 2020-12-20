@@ -7,18 +7,23 @@ export const contactsFeatureKey = 'contactsFeatureKey';
 
 export interface IContactsState extends EntityState<Contact> {
   isLoading: boolean;
+  loadingError: string;
 }
 
 export const adapter: EntityAdapter<Contact> = createEntityAdapter<Contact>();
 
 export const initialContactState: IContactsState = adapter.getInitialState({
-  isLoading: true
+  isLoading: true,
+  loadingError: ""
 });
 
 const contactsReducer = createReducer(
   initialContactState,
   on(contactsActions.loadContactsSuccess, (state, { contacts }) => {
     return adapter.setAll(contacts, { ...state, isLoading: false });
+  }),
+  on(contactsActions.loadContactsFailure, (state, { errorMessage }) => {
+    return adapter.setAll([], { ...state, isLoading: false, loadingError: errorMessage });
   })
 );
 
