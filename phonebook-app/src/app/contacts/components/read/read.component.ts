@@ -35,35 +35,17 @@ export class ReadComponent implements OnInit {
 
     this.isLoading$ = this.store.pipe(select(contactsSelectors.areContactsLoading()));
 
-    this.errorMessage$ = this.store.pipe(select(contactsSelectors.didLoadingFail()));
-    this.errorMessage$.subscribe(errorMessage => this.handleError(errorMessage));
-
-    this.contacts$ = this.store.pipe(select(contactsSelectors.selectAllContacts()))
-      .pipe(
-        tap(contacts => this.contacts = contacts)
-      );
-  }
-
-  handleError(message: string){
-    if(message){
-      this.modal.showError('Error while loading contacts', message);
-    }
+    this.contacts$ = this.store.pipe(select(contactsSelectors.selectAllContacts()));
   }
 
   onDeleteClick(id: string, name: string): void {
     if (confirm('Are you sure you want to delete ' + name + '?')) {
-      this.crudService.delete(id).pipe(untilDestroyed(this))
-        .subscribe(_ => {
-          alert(name + ' was deleted from your contacts');
-          this.contacts = this.contacts.filter(contact => contact.id !== id);
-        }, _ => {
-          alert('Error while deleting ' + name);
-        });
+      this.store.dispatch(contactsActions.deleteContact({ payload: { contactId: id } }));
     }
   }
 
-  trackByFn(index, item) {
-    return index;
+  trackByFn(_, contact: Contact): string {
+    return contact.id;
   }
 
 }

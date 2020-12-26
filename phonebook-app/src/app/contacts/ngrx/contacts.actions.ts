@@ -10,7 +10,12 @@ export const loadContactsSuccess = createAction(
   props<{ contacts: Contact[] }>()
 );
 
-export const loadContactsFailure = createAction(
-  '[Contacts] Load Contacts Failure',
-  props<{ errorMessage: string }>()
+export const contactsFailure = createAction(
+  '[Contacts] Contacts Failure',
+  props<{ payload: { errorMessage: string } }>()
+);
+
+export const deleteContact = createAction(
+  '[Contacts] Delete Contact',
+  props<{ payload: { contactId: string } }>()
 );

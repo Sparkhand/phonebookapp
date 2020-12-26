@@ -22,8 +22,8 @@ const contactsReducer = createReducer(
   on(contactsActions.loadContactsSuccess, (state, { contacts }) => {
     return adapter.setAll(contacts, { ...state, isLoading: false });
   }),
-  on(contactsActions.loadContactsFailure, (state, {errorMessage}) => {
-    return adapter.setAll([], {...state, isLoading: false, errorMessage: errorMessage})
+  on(contactsActions.contactsFailure, (state, { payload }) => {
+    return adapter.setAll([], { ...state, isLoading: false, errorMessage: payload.errorMessage })
   })
 );
 

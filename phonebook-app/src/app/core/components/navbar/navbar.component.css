@@ -1,6 +1,6 @@
-.active-link {
-    font-weight: 600 !important;
-    color: white !important;
+#navbarNavAltMarkup .active-link {
+    font-weight: 600;
+    color: white;
 }
 
 #switch{
