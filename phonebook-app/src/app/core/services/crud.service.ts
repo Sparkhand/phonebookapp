@@ -1,9 +1,13 @@
 import { Injectable } from '@angular/core';
-import { interval, Observable, throwError } from 'rxjs';
+import { interval, Observable, throwError, timer } from 'rxjs';
 import { HttpClient, HttpErrorResponse, HttpHeaders } from '@angular/common/http';
 import { catchError, map, switchMap } from 'rxjs/operators';
 import { environment as env } from 'src/environments/environment';
 import { Contact } from 'src/app/contacts/ts/models/contact';
+import { Store } from '@ngrx/store';
+import { AppState } from 'src/app/reducers';
+import * as contactsActions from '../../contacts/ngrx/contacts.actions';
+import { EMPTY } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
@@ -16,7 +20,10 @@ export class CrudService {
     })
   };
 
-  constructor(private httpClient: HttpClient) { }
+  constructor(
+    private httpClient: HttpClient,
+    private store: Store<AppState>
+  ) { }
 
   // CREATE
   create(contact: Contact): Observable<Contact> {
@@ -28,9 +35,13 @@ export class CrudService {
 
   // READ
   fetchData$(): Observable<Contact[]> {
-    return interval(1000)
+    return timer(0, 1000)
       .pipe(
-        switchMap(_ => this.getAll())
+        switchMap(_ => this.getAll()),
+        catchError(_ => {
+          this.store.dispatch(contactsActions.contactsFailure({ payload: { errorMessage: 'Error while loading contacs' } }));
+          return EMPTY;
+        })
       );
   }
 
@@ -59,7 +70,10 @@ export class CrudService {
   delete(id: string): Observable<Contact> {
     return this.httpClient.delete<Contact>(env.contactApiServer + '/delete/' + id, this.httpOptions)
       .pipe(
-        catchError(this.errorHandler)
+        catchError(_ => {
+          this.store.dispatch(contactsActions.contactsFailure({ payload: { errorMessage: 'Error deleting contact' } }));
+          return EMPTY;
+        })
       );
   }
 

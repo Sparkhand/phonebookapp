@@ -21,11 +21,7 @@ export class ContactsEffects {
   contactsFetchAction$ = createEffect(() => this.actions$.pipe(
     ofType(contactsActions.loadContacts),
     switchMap(_ => this.crudService.fetchData$()),
-    map(contacts => contactsActions.loadContactsSuccess({ contacts })),
-    catchError(_ => {
-      this.store.dispatch(contactsActions.contactsFailure({ payload: { errorMessage: 'Error while loading contacs' } }));
-      return EMPTY;
-    })
+    map(contacts => contactsActions.loadContactsSuccess({ contacts }))
   ));
 
   loadContactsFailure$ = createEffect(() => this.actions$.pipe(
@@ -38,11 +34,7 @@ export class ContactsEffects {
   deleteContact$ = createEffect(() => this.actions$.pipe(
     ofType(contactsActions.deleteContact),
     mergeMap(action => this.crudService.delete(action.payload.contactId)),
-    map(_ => contactsActions.loadContacts()),
-    catchError(_ => {
-      this.store.dispatch(contactsActions.contactsFailure({ payload: { errorMessage: 'Error deleting contact' } }));
-      return EMPTY;
-    })
+    map(_ => contactsActions.loadContacts())
   ));
 
 }
